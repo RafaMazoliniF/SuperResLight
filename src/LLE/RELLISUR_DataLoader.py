@@ -117,10 +117,12 @@ class CustomLLEDataset(Dataset):
 
 def get_LLE_datasets_with_hist():
     base_dir = '../../RELLISUR-Dataset'
-
+    
     # Transformação para a imagem de entrada (LLLR)
     input_transforms = transforms.Compose([
-        transforms.RandomEqualize(p=1.0), # Aplica equalização
+        transforms.Lambda(F.adjust_gamma(equalized_tensor, 0.8)),
+        transforms.Lambda(F.adjust_brightness(equalized_tensor, 1.2)),
+        transforms.Lambda(F.adjust_contrast(equalized_tensor, 1.2)),
         transforms.ToTensor()
     ])
 
